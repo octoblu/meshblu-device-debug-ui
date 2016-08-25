@@ -38,8 +38,11 @@
     "react": "^15.2.1",
     "react-cookie": "^0.4.8",
     "react-dom": "^15.2.1",
+    "react-icons": "^2.2.1",
     "react-router": "^2.6.0",
-    "zooid-spinner": "^1.0.1"
+    "zooid-page": "^2.0.0",
+    "zooid-spinner": "^1.0.1",
+    "zooid-ui": "^8.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.7",
