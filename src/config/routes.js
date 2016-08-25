@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 import App from '../containers/App'
-import Home from '../containers/home'
+import Home from '../containers/Home'
 import NotFound from '../components/NotFound'
 import { storeAuthenticationAndRedirect } from '../services/auth-service'
 
