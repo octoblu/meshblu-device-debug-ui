@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import Card from 'zooid-card'
 import Input from 'zooid-input'
 
 import DeviceState from '../DeviceState'
@@ -17,12 +18,12 @@ const DeviceDebugPanel = ({ device, deviceUUID, path, onDeviceUUID, onPath }) =>
   const onChangePath = (event) => onPath(event.target.value)
 
   return (
-    <div>
+    <Card>
       <Input label="Device UUID" required onChange={onChangeUUID} value={deviceUUID} />
       <Input label="Path" onChange={onChangePath} value={path} />
 
       <DeviceState device={device} path={path} />
-    </div>
+    </Card>
   )
 }
 
