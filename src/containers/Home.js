@@ -12,11 +12,7 @@ export default class Home extends Component {
   componentWillMount(){
     const credentials = getCredentials()
     this.deviceFirehose = new DeviceFirehose(credentials)
-    // this.deviceFirehose.connect(this.handleError)
-    this.deviceFirehose.connect((error) => {
-      console.log('connected', {error})
-      this.handleError(error)
-    })
+    this.deviceFirehose.connect(this.handleError)
   }
 
   handleError = (error) => {
