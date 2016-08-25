@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import uuid from 'uuid'
 
 import HomePage from '../components/HomePage'
 import DeviceFirehose from '../firehoses/device-firehose'
@@ -6,7 +7,7 @@ import {getCredentials} from '../services/auth-service'
 
 export default class Home extends Component {
   state = {
-
+    panels: [],
   }
 
   componentWillMount(){
@@ -20,9 +21,19 @@ export default class Home extends Component {
     this.setState({ error })
   }
 
-  render(){
-    const { error } = this.state
+  onAdd = () => {
+    const { panels } = this.state
+    panels.push(uuid.v1())
+    this.setState({ panels })
+  }
 
-    return <HomePage error={error} deviceFirehose={this.deviceFirehose} />
+  render(){
+    const { error, panels } = this.state
+
+    return <HomePage
+      error={error}
+      panels={panels}
+      deviceFirehose={this.deviceFirehose}
+      onAdd={this.onAdd} />
   }
 }

@@ -3,6 +3,7 @@ import Card from 'zooid-card'
 import Input from 'zooid-input'
 
 import DeviceState from '../DeviceState'
+import styles from './styles.css'
 
 const propTypes = {
   device: PropTypes.object,
@@ -18,7 +19,7 @@ const DeviceDebugPanel = ({ device, deviceUUID, path, onDeviceUUID, onPath }) =>
   const onChangePath = (event) => onPath(event.target.value)
 
   return (
-    <Card>
+    <Card className={styles.card}>
       <Input label="Device UUID" required onChange={onChangeUUID} value={deviceUUID} />
       <Input label="Path" onChange={onChangePath} value={path} />
 
