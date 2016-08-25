@@ -1,12 +1,17 @@
 import React, { PropTypes } from 'react'
 import Page from 'zooid-page'
 
-const propTypes = {}
+import DeviceDebug from '../../containers/DeviceDebug'
+
+const propTypes = {
+  deviceFirehose: PropTypes.object.isRequired,
+}
 const defaultProps = {}
 
-const HomePage = () => {
+const HomePage = ({ deviceFirehose }) => {
   return (
     <Page>
+      <DeviceDebug deviceFirehose={deviceFirehose} />
     </Page>
   )
 }

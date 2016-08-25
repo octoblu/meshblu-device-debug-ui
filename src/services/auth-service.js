@@ -19,6 +19,11 @@ export function getMeshbluConfig() {
   }
 }
 
+export function getCredentials() {
+  const { uuid, token } = getMeshbluConfig()
+  return { uuid, token }
+}
+
 export function fetchOctobluUser(callback) {
   const bearerToken = cookie.load('meshbluBearerToken')
 
