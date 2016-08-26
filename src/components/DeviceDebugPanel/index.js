@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import Button from 'zooid-button'
 import Card from 'zooid-card'
 import Input from 'zooid-input'
 
@@ -24,7 +25,9 @@ const DeviceDebugPanel = ({ device, deviceUUID, error, name, path, onDeviceUUID,
 
   return (
     <Card className={styles.card}>
-      <Input placeholder="Name" onChange={onChangeName} value={name} />
+      <a href className={styles.remove}>&times;</a>
+
+      <Input placeholder="Name" onChange={onChangeName} value={name} className={styles.name} />
       <Input label="Device UUID" required onChange={onChangeUUID} value={deviceUUID} />
       <Input label="Path" onChange={onChangePath} value={path} />
 
