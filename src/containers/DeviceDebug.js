@@ -49,14 +49,12 @@ export default class DeviceDebug extends Component {
   }
 
   onDevice = (device) => {
-    console.log('onDevice')
     const { deviceUUID } = this.state
     if (device.uuid != deviceUUID) return this.setState({ device: null })
     this.setState({ device })
   }
 
   onDeviceUUID = (deviceUUID) => {
-    console.log('onDeviceUUID')
     const { panelID, device } = this.state
     if (device && device.uuid != deviceUUID) this.setState({ device: null })
     setPanelInfo(panelID, { deviceUUID })

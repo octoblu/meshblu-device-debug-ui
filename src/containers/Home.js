@@ -4,11 +4,12 @@ import HomePage from '../components/HomePage'
 import DeviceFirehose from '../firehoses/device-firehose'
 import {getCredentials} from '../services/auth-service'
 import {addPanel, getPanels, removePanel} from '../services/panels-service'
-import {verifyConfigureReceived} from '../services/subscriptions-service'
+import {createConfigureReceived, verifyConfigureReceived} from '../services/subscriptions-service'
 
 export default class Home extends Component {
   state = {
     panels: [],
+    missingSubscription: false,
   }
 
   componentWillMount(){
@@ -16,7 +17,7 @@ export default class Home extends Component {
     this.deviceFirehose = new DeviceFirehose(credentials)
     this.deviceFirehose.connect(this.handleError)
     this.loadPanels()
-    verifyConfigureReceived(credentials.uuid, this.handleError)
+    this.verifyConfigureReceived()
   }
 
   handleError = (error) => {
@@ -38,14 +39,33 @@ export default class Home extends Component {
     this.loadPanels()
   }
 
+  onSubscribe = () => {
+    const credentials = getCredentials()
+    createConfigureReceived(credentials.uuid, (error) => {
+      if (error) return this.handleError(error)
+
+      this.verifyConfigureReceived()
+    })
+  }
+
+  verifyConfigureReceived() {
+    const credentials = getCredentials()
+    verifyConfigureReceived(credentials.uuid, (error, verified) => {
+      if (error) return this.handleError(error)
+      this.setState({ missingSubscription: !verified })
+    })
+  }
+
   render(){
-    const { error, panels } = this.state
+    const { error, missingSubscription, panels } = this.state
 
     return <HomePage
       error={error}
+      missingSubscription={missingSubscription}
       panels={panels}
       deviceFirehose={this.deviceFirehose}
       onAdd={this.onAdd}
-      onRemove={this.onRemove} />
+      onRemove={this.onRemove}
+      onSubscribe={this.onSubscribe} />
   }
 }

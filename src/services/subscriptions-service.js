@@ -2,6 +2,16 @@ import MeshbluHTTP from 'browser-meshblu-http'
 
 import {getMeshbluConfig} from './auth-service'
 
+export function createConfigureReceived(emitterUuid, callback) {
+  const config = getMeshbluConfig()
+  const meshblu = new MeshbluHTTP(config)
+
+  const subscriberUuid = config.uuid
+  const type = 'configure.received'
+
+  meshblu.createSubscription({emitterUuid, subscriberUuid, type}, callback)
+}
+
 export function verifyConfigureReceived(emitterUuid, callback) {
   const config = getMeshbluConfig()
   const meshblu = new MeshbluHTTP(config)
@@ -10,8 +20,6 @@ export function verifyConfigureReceived(emitterUuid, callback) {
     if (error) return callback(error)
 
     const found = _.some(subscriptions, {emitterUuid, type: 'configure.received'})
-    if (found) return callback()
-
-    callback(new Error('User is not subscribed to its own configure.received'))
+    callback(null, found)
   })
 }
