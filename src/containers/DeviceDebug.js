@@ -26,25 +26,12 @@ export default class DeviceDebug extends Component {
 
   loadFromLocalStorage() {
     const { panelID } = this.state
-    const { deviceUUID, path } = getPanelInfo(panelID)
+    const { deviceUUID, name, path } = getPanelInfo(panelID)
 
     this.deviceFirehose.off(`device:${this.state.deviceUUID}`, this.onDevice)
-    this.setState({ deviceUUID, path })
+    this.setState({ deviceUUID, name, path })
     this.deviceFirehose.on(`device:${deviceUUID}`, this.onDevice)
     this.deviceFirehose.refresh(deviceUUID, (error) => this.setState({ error }))
-  }
-
-  onDeviceUUID = (deviceUUID) => {
-    const { panelID, path, device } = this.state
-    if (device && device.uuid != deviceUUID) this.setState({ device: null })
-    setPanelInfo(panelID, { path, deviceUUID })
-    this.loadFromLocalStorage()
-  }
-
-  onPath = (path) => {
-    const { panelID, deviceUUID } = this.state
-    setPanelInfo(panelID, { path, deviceUUID })
-    this.loadFromLocalStorage()
   }
 
   onDevice = (device) => {
@@ -53,15 +40,35 @@ export default class DeviceDebug extends Component {
     this.setState({ device })
   }
 
+  onDeviceUUID = (deviceUUID) => {
+    const { panelID, device } = this.state
+    if (device && device.uuid != deviceUUID) this.setState({ device: null })
+    setPanelInfo(panelID, { deviceUUID })
+    this.loadFromLocalStorage()
+  }
+
+  onName = (name) => {
+    setPanelInfo(this.state.panelID, { name })
+    this.loadFromLocalStorage()
+  }
+
+  onPath = (path) => {
+    setPanelInfo(this.state.panelID, { path })
+    this.loadFromLocalStorage()
+  }
+
   render(){
-    const { device, deviceUUID, path } = this.state
+    const { device, deviceUUID, error, name, path } = this.state
 
     return (
       <DeviceDebugPanel
         device={device}
         deviceUUID={deviceUUID}
+        error={error}
+        name={name}
         path={path}
         onDeviceUUID={this.onDeviceUUID}
+        onName={this.onName}
         onPath={this.onPath} />
     )
   }

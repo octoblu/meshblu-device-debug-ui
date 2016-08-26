@@ -15,12 +15,15 @@ export function getPanels() {
 
 export function getPanelInfo(panelID) {
   const panelStr = window.localStorage.getItem(`panel:${panelID}`)
-  if (!panelStr) return {deviceUUID: '', path: ''}
+  if (!panelStr) return {name: '', deviceUUID: '', path: ''}
 
   return JSON.parse(panelStr)
 }
 
-export function setPanelInfo(panelID, { deviceUUID, path }) {
-  const panelStr = JSON.stringify({ deviceUUID, path })
-  window.localStorage.setItem(`panel:${panelID}`, panelStr)
+export function setPanelInfo(panelID, newPanelInfo) {
+  const oldPanelInfo = getPanelInfo(panelID)
+  const panelInfo = _.assign(oldPanelInfo, newPanelInfo)
+
+  const panelInfoStr = JSON.stringify(panelInfo)
+  window.localStorage.setItem(`panel:${panelID}`, panelInfoStr)
 }

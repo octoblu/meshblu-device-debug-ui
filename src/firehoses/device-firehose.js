@@ -28,6 +28,7 @@ export default class DeviceFirehose extends EventEmitter2 {
   }
 
   refresh(targetUUID, callback) {
+    if (_.isEmpty(targetUUID)) return callback(new Error('Invalid Device UUID'))
     const { uuid, token } = this._meshbluConfig
     const meshblu = new MeshbluHTTP({ uuid, token })
     meshblu.update(targetUUID, {refresh: Date.now()}, (error) => callback(error))
