@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import uuid from 'uuid'
 
 import HomePage from '../components/HomePage'
 import DeviceFirehose from '../firehoses/device-firehose'
 import {getCredentials} from '../services/auth-service'
+import {addPanel, getPanels} from '../services/panels-service'
 
 export default class Home extends Component {
   state = {
@@ -14,6 +14,7 @@ export default class Home extends Component {
     const credentials = getCredentials()
     this.deviceFirehose = new DeviceFirehose(credentials)
     this.deviceFirehose.connect(this.handleError)
+    this.loadPanels()
   }
 
   handleError = (error) => {
@@ -21,10 +22,13 @@ export default class Home extends Component {
     this.setState({ error })
   }
 
+  loadPanels() {
+    this.setState({ panels: getPanels() })
+  }
+
   onAdd = () => {
-    const { panels } = this.state
-    panels.push(uuid.v1())
-    this.setState({ panels })
+    addPanel()
+    this.loadPanels()
   }
 
   render(){
