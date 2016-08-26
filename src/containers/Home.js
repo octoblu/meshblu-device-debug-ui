@@ -4,6 +4,7 @@ import HomePage from '../components/HomePage'
 import DeviceFirehose from '../firehoses/device-firehose'
 import {getCredentials} from '../services/auth-service'
 import {addPanel, getPanels, removePanel} from '../services/panels-service'
+import {verifyConfigureReceived} from '../services/subscriptions-service'
 
 export default class Home extends Component {
   state = {
@@ -15,6 +16,7 @@ export default class Home extends Component {
     this.deviceFirehose = new DeviceFirehose(credentials)
     this.deviceFirehose.connect(this.handleError)
     this.loadPanels()
+    verifyConfigureReceived(credentials.uuid, this.handleError)
   }
 
   handleError = (error) => {

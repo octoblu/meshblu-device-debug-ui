@@ -32,7 +32,7 @@ const DeviceDebugPanel = ({ device, deviceUUID, error, name, path, onDeviceUUID,
     <Card className={styles.card}>
       <a href onClick={onClickRemove} className={styles.remove}>&times;</a>
 
-      <Input placeholder="Name" onChange={onChangeName} value={name} className={styles.name} />
+      <Input placeholder="Name" onChange={onChangeName} value={name} />
       <Input label="Device UUID" required onChange={onChangeUUID} value={deviceUUID} />
       <Input label="Path" onChange={onChangePath} value={path} />
 

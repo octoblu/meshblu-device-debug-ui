@@ -26,6 +26,18 @@ export default class DeviceDebug extends Component {
     this.loadFromLocalStorage()
   }
 
+  componentWillUnmount() {
+    this.cancelled = true
+    const { panelID } = this.state
+    const { deviceUUID, name, path } = getPanelInfo(panelID)
+    this.deviceFirehose.off(`device:${this.state.deviceUUID}`, this.onDevice)
+  }
+
+  handleError = (error) => {
+    if (this.cancelled) return
+    if (error) return this.setState({ error })
+  }
+
   loadFromLocalStorage() {
     const { panelID } = this.state
     const { deviceUUID, name, path } = getPanelInfo(panelID)
@@ -33,16 +45,18 @@ export default class DeviceDebug extends Component {
     this.deviceFirehose.off(`device:${this.state.deviceUUID}`, this.onDevice)
     this.setState({ deviceUUID, name, path })
     this.deviceFirehose.on(`device:${deviceUUID}`, this.onDevice)
-    this.deviceFirehose.refresh(deviceUUID, (error) => this.setState({ error }))
+    this.deviceFirehose.refresh(deviceUUID, this.handleError)
   }
 
   onDevice = (device) => {
+    console.log('onDevice')
     const { deviceUUID } = this.state
     if (device.uuid != deviceUUID) return this.setState({ device: null })
     this.setState({ device })
   }
 
   onDeviceUUID = (deviceUUID) => {
+    console.log('onDeviceUUID')
     const { panelID, device } = this.state
     if (device && device.uuid != deviceUUID) this.setState({ device: null })
     setPanelInfo(panelID, { deviceUUID })

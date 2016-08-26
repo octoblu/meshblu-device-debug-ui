@@ -3,16 +3,6 @@
   position: relative;
 }
 
-:local .header {
-  display: flex;
-  flex-direction: row;
-}
-
-:local .name {
-  flex-grow: 1;
-  margin-right: 1em;
-}
-
 :local .remove {
   position: absolute;
   top: -0.5em;

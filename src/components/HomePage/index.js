@@ -20,12 +20,15 @@ const HomePage = ({ error, panels, deviceFirehose, onAdd, onRemove }) => {
     onAdd()
   }
 
+  const errorStr = _.get(error, 'message')
+  if (!_.isEmpty(errorStr)) return <Page error={errorStr} />
+
   const deviceDebugs = _.map(panels, (panelID) => {
     return (<DeviceDebug key={panelID} panelID={panelID} deviceFirehose={deviceFirehose} onRemove={onRemove} />)
   })
 
   return (
-    <Page error={error}>
+    <Page>
       {deviceDebugs}
 
       <div className={styles.actions}>
