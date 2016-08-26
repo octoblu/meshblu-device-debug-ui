@@ -15,17 +15,22 @@ const propTypes = {
   onDeviceUUID: PropTypes.func.isRequired,
   onName: PropTypes.func.isRequired,
   onPath: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
 }
 const defaultProps = {}
 
-const DeviceDebugPanel = ({ device, deviceUUID, error, name, path, onDeviceUUID, onName, onPath }) => {
+const DeviceDebugPanel = ({ device, deviceUUID, error, name, path, onDeviceUUID, onName, onPath, onRemove }) => {
   const onChangeName = (event) => onName(event.target.value)
   const onChangeUUID = (event) => onDeviceUUID(event.target.value)
   const onChangePath = (event) => onPath(event.target.value)
+  const onClickRemove = (event) => {
+    event.preventDefault()
+    onRemove()
+  }
 
   return (
     <Card className={styles.card}>
-      <a href className={styles.remove}>&times;</a>
+      <a href onClick={onClickRemove} className={styles.remove}>&times;</a>
 
       <Input placeholder="Name" onChange={onChangeName} value={name} className={styles.name} />
       <Input label="Device UUID" required onChange={onChangeUUID} value={deviceUUID} />

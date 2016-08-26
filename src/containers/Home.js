@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import HomePage from '../components/HomePage'
 import DeviceFirehose from '../firehoses/device-firehose'
 import {getCredentials} from '../services/auth-service'
-import {addPanel, getPanels} from '../services/panels-service'
+import {addPanel, getPanels, removePanel} from '../services/panels-service'
 
 export default class Home extends Component {
   state = {
@@ -31,6 +31,11 @@ export default class Home extends Component {
     this.loadPanels()
   }
 
+  onRemove = (panelID) => {
+    removePanel(panelID)
+    this.loadPanels()
+  }
+
   render(){
     const { error, panels } = this.state
 
@@ -38,6 +43,7 @@ export default class Home extends Component {
       error={error}
       panels={panels}
       deviceFirehose={this.deviceFirehose}
-      onAdd={this.onAdd} />
+      onAdd={this.onAdd}
+      onRemove={this.onRemove} />
   }
 }

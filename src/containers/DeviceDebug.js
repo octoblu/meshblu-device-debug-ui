@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react'
 
 import DeviceDebugPanel from '../components/DeviceDebugPanel'
-import {getPanelInfo, setPanelInfo} from '../services/panels-service'
+import {clearPanelInfo, getPanelInfo, setPanelInfo} from '../services/panels-service'
 
 const propTypes = {
   panelID: PropTypes.string.isRequired,
   deviceFirehose: PropTypes.object.isRequired,
+  onRemove: PropTypes.func.isRequired,
 }
 
 export default class DeviceDebug extends Component {
@@ -18,6 +19,7 @@ export default class DeviceDebug extends Component {
     super(props)
     this.deviceFirehose = props.deviceFirehose
     this.state.panelID = props.panelID
+    this._onPanelRemove = props.onRemove
   }
 
   componentWillMount() {
@@ -57,6 +59,11 @@ export default class DeviceDebug extends Component {
     this.loadFromLocalStorage()
   }
 
+  onRemove = () => {
+    clearPanelInfo(this.state.panelID)
+    this._onPanelRemove(this.state.panelID)
+  }
+
   render(){
     const { device, deviceUUID, error, name, path } = this.state
 
@@ -69,7 +76,8 @@ export default class DeviceDebug extends Component {
         path={path}
         onDeviceUUID={this.onDeviceUUID}
         onName={this.onName}
-        onPath={this.onPath} />
+        onPath={this.onPath}
+        onRemove={this.onRemove} />
     )
   }
 }

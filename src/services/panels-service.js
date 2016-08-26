@@ -6,6 +6,10 @@ export function addPanel() {
   window.localStorage.setItem('panels', JSON.stringify(panels))
 }
 
+export function clearPanelInfo(panelID) {
+  window.localStorage.removeItem(`panel:${panelID}`)
+}
+
 export function getPanels() {
   const panelsStr = window.localStorage.getItem('panels')
   if (!panelsStr) return []
@@ -18,6 +22,11 @@ export function getPanelInfo(panelID) {
   if (!panelStr) return {name: '', deviceUUID: '', path: ''}
 
   return JSON.parse(panelStr)
+}
+
+export function removePanel(panelID) {
+  const panels = _.without(getPanels(), panelID)
+  window.localStorage.setItem('panels', JSON.stringify(panels))
 }
 
 export function setPanelInfo(panelID, newPanelInfo) {

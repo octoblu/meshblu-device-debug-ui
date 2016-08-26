@@ -10,17 +10,18 @@ const propTypes = {
   deviceFirehose: PropTypes.object.isRequired,
   panels: PropTypes.array.isRequired,
   onAdd: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
 }
 const defaultProps = {}
 
-const HomePage = ({ error, panels, deviceFirehose, onAdd }) => {
+const HomePage = ({ error, panels, deviceFirehose, onAdd, onRemove }) => {
   const onClickAdd = (event) => {
     event.preventDefault()
     onAdd()
   }
 
   const deviceDebugs = _.map(panels, (panelID) => {
-    return (<DeviceDebug key={panelID} panelID={panelID} deviceFirehose={deviceFirehose} />)
+    return (<DeviceDebug key={panelID} panelID={panelID} deviceFirehose={deviceFirehose} onRemove={onRemove} />)
   })
 
   return (
