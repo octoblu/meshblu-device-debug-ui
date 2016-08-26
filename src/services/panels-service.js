@@ -12,3 +12,15 @@ export function getPanels() {
 
   return JSON.parse(panelsStr)
 }
+
+export function getPanelInfo(panelID) {
+  const panelStr = window.localStorage.getItem(`panel:${panelID}`)
+  if (!panelStr) return {deviceUUID: '', path: ''}
+
+  return JSON.parse(panelStr)
+}
+
+export function setPanelInfo(panelID, { deviceUUID, path }) {
+  const panelStr = JSON.stringify({ deviceUUID, path })
+  window.localStorage.setItem(`panel:${panelID}`, panelStr)
+}
