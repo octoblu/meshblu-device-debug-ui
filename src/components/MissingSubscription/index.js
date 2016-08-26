@@ -17,13 +17,13 @@ const MissingSubscription = ({ message, onSubscribe }) => {
   }
 
   return (
-    <Card>
+    <div>
       <h1>Missing Subscription</h1>
       <p className={styles.message}>{message}</p>
       <div className={styles.buttons}>
         <Button kind="primary" size="large" onClick={onClick}>CREATE SUBSCRIPTION</Button>
       </div>
-    </Card>
+    </div>
   )
 }
 

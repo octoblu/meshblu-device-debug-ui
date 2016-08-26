@@ -4,7 +4,7 @@ import HomePage from '../components/HomePage'
 import DeviceFirehose from '../firehoses/device-firehose'
 import {getCredentials} from '../services/auth-service'
 import {addPanel, getPanels, removePanel} from '../services/panels-service'
-import {createConfigureReceived, verifyConfigureReceived} from '../services/subscriptions-service'
+import {createSubscription, verifySubscription} from '../services/subscriptions-service'
 
 export default class Home extends Component {
   state = {
@@ -41,7 +41,9 @@ export default class Home extends Component {
 
   onSubscribe = () => {
     const credentials = getCredentials()
-    createConfigureReceived(credentials.uuid, (error) => {
+    const subscription = {emitterUuid: credentials.uuid, type: 'configure.received'}
+
+    createSubscription(subscription, (error) => {
       if (error) return this.handleError(error)
 
       this.verifyConfigureReceived()
@@ -50,7 +52,8 @@ export default class Home extends Component {
 
   verifyConfigureReceived() {
     const credentials = getCredentials()
-    verifyConfigureReceived(credentials.uuid, (error, verified) => {
+    const subscription = {emitterUuid: credentials.uuid, type: 'configure.received'}
+    verifySubscription(subscription, (error, verified) => {
       if (error) return this.handleError(error)
       this.setState({ missingSubscription: !verified })
     })

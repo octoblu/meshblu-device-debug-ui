@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import Button from 'zooid-button'
+import Card from 'zooid-card'
 import Page from 'zooid-page'
 
 import MissingSubscription from '../MissingSubscription'
@@ -28,9 +29,11 @@ const HomePage = ({ error, missingSubscription, panels, deviceFirehose, onAdd, o
   if (missingSubscription) {
     return (
       <Page>
-        <MissingSubscription
-          onSubscribe={onSubscribe}
-          message='User is not subscribed to its own configure.received messages.' />
+        <Card className={styles.card}>
+          <MissingSubscription
+            onSubscribe={onSubscribe}
+            message='User is not subscribed to its own configure.received messages.' />
+        </Card>
       </Page>
     )
   }

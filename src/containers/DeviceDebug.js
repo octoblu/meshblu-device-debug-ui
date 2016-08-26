@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 
 import DeviceDebugPanel from '../components/DeviceDebugPanel'
 import {clearPanelInfo, getPanelInfo, setPanelInfo} from '../services/panels-service'
+import {createSubscription, verifySubscription} from '../services/subscriptions-service'
 
 const propTypes = {
   panelID: PropTypes.string.isRequired,
@@ -13,6 +14,7 @@ export default class DeviceDebug extends Component {
   state = {
     deviceUUID: '',
     path: '',
+    missingSubscription: false,
   }
 
   constructor(props) {
@@ -43,9 +45,11 @@ export default class DeviceDebug extends Component {
     const { deviceUUID, name, path } = getPanelInfo(panelID)
 
     this.deviceFirehose.off(`device:${this.state.deviceUUID}`, this.onDevice)
-    this.setState({ deviceUUID, name, path })
-    this.deviceFirehose.on(`device:${deviceUUID}`, this.onDevice)
-    this.deviceFirehose.refresh(deviceUUID, this.handleError)
+    this.setState({ deviceUUID, name, path }, () => {
+      this.deviceFirehose.on(`device:${deviceUUID}`, this.onDevice)
+      this.deviceFirehose.refresh(deviceUUID, this.handleError)
+      this.verifyConfigureSent()
+    })
   }
 
   onDevice = (device) => {
@@ -76,20 +80,44 @@ export default class DeviceDebug extends Component {
     this._onPanelRemove(this.state.panelID)
   }
 
+  onSubscribe = () => {
+    const { deviceUUID } = this.state
+    const subscription = {emitterUuid: deviceUUID, type: 'configure.sent'}
+    createSubscription(subscription, (error) => {
+      if (error) return this.handleError(error)
+
+      this.loadFromLocalStorage()
+    })
+  }
+
+  verifyConfigureSent() {
+    const {deviceUUID} = this.state
+    if (_.isEmpty(deviceUUID)) return
+
+    const subscription = {emitterUuid: deviceUUID, type: 'configure.sent'}
+    verifySubscription(subscription, (error, verified) => {
+      if (error) return this.handleError(error)
+      if (this.cancelled) return
+      this.setState({ missingSubscription: !verified })
+    })
+  }
+
   render(){
-    const { device, deviceUUID, error, name, path } = this.state
+    const { device, deviceUUID, error, missingSubscription, name, path } = this.state
 
     return (
       <DeviceDebugPanel
         device={device}
         deviceUUID={deviceUUID}
         error={error}
+        missingSubscription={missingSubscription}
         name={name}
         path={path}
         onDeviceUUID={this.onDeviceUUID}
         onName={this.onName}
         onPath={this.onPath}
-        onRemove={this.onRemove} />
+        onRemove={this.onRemove}
+        onSubscribe={this.onSubscribe} />
     )
   }
 }
