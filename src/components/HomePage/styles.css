@@ -1,6 +1,10 @@
 :local .actions {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row-reverse
+}
+
+:local .topbutton {
+  z-index: 200;
 }
 
 :local .card {
