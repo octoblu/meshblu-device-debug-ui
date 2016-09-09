@@ -1,6 +1,7 @@
 :local .actions {
   display: flex;
   flex-direction: row-reverse;
+  z-index: 200
 }
 
 :local .card {

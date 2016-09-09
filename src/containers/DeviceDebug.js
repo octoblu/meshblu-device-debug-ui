@@ -31,7 +31,7 @@ export default class DeviceDebug extends Component {
   componentWillUnmount() {
     this.cancelled = true
     const { panelID } = this.state
-    const { deviceUUID, name, path } = getPanelInfo(panelID)
+    const { deviceUUID, name, path, x, y, width, height } = getPanelInfo(panelID)
     this.deviceFirehose.off(`device:${this.state.deviceUUID}`, this.onDevice)
   }
 
@@ -42,10 +42,10 @@ export default class DeviceDebug extends Component {
 
   loadFromLocalStorage() {
     const { panelID } = this.state
-    const { deviceUUID, name, path } = getPanelInfo(panelID)
+    const { deviceUUID, name, path, x, y, width, height } = getPanelInfo(panelID)
 
     this.deviceFirehose.off(`device:${this.state.deviceUUID}`, this.onDevice)
-    this.setState({ deviceUUID, name, path }, () => {
+    this.setState({ deviceUUID, name, path, x, y, width, height }, () => {
       this.deviceFirehose.on(`device:${deviceUUID}`, this.onDevice)
       this.deviceFirehose.refresh(deviceUUID, this.handleError)
       this.verifyConfigureSent()
@@ -90,6 +90,14 @@ export default class DeviceDebug extends Component {
     })
   }
 
+  onDrag = (x, y) => {
+    setPanelInfo(this.state.panelID, {x, y})
+  }
+
+  onResize = (width, height) => {
+    setPanelInfo(this.state.panelID, {width, height})
+  }
+
   verifyConfigureSent() {
     const {deviceUUID} = this.state
     if (_.isEmpty(deviceUUID)) return
@@ -103,7 +111,7 @@ export default class DeviceDebug extends Component {
   }
 
   render(){
-    const { device, deviceUUID, error, missingSubscription, name, path } = this.state
+    const { device, deviceUUID, error, missingSubscription, name, path, x, y, width, height } = this.state
 
     return (
       <DeviceDebugPanel
@@ -113,11 +121,17 @@ export default class DeviceDebug extends Component {
         missingSubscription={missingSubscription}
         name={name}
         path={path}
+        x={x}
+        y={y}
+        width={width}
+        height={height}
         onDeviceUUID={this.onDeviceUUID}
         onName={this.onName}
         onPath={this.onPath}
         onRemove={this.onRemove}
-        onSubscribe={this.onSubscribe} />
+        onSubscribe={this.onSubscribe}
+        onDrag={this.onDrag}
+        onResize={this.onResize} />
     )
   }
 }
