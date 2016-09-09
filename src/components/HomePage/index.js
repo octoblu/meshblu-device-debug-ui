@@ -53,7 +53,7 @@ const HomePage = ({ error, missingSubscription, panels, deviceFirehose, onAdd, o
       {deviceDebugs}
 
       <div className={styles.actions}>
-        <Button onClick={onClickAdd} kind="primary" size="large">Add</Button>
+        <Button className={styles.topbutton} onClick={onClickAdd} kind="primary" size="large">Add</Button>
       </div>
     </Page>
   )

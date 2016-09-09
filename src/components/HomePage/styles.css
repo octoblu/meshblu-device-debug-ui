@@ -3,6 +3,10 @@
   flex-direction: row-reverse
 }
 
+:local .topbutton {
+  z-index: 200;
+}
+
 :local .card {
   margin-bottom: 1em;
 }
