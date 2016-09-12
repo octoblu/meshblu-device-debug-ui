@@ -13,7 +13,7 @@ const propTypes = {
 
 export default class DeviceDebug extends Component {
   state = {
-    deviceUUID: '',
+    deviceUUID: null,
     path: '',
     missingSubscription: false,
   }
@@ -50,12 +50,14 @@ export default class DeviceDebug extends Component {
     const { panelID } = this.state
     const { deviceUUID, name, path, x, y, width, height } = getPanelInfo(panelID)
 
-    this.deviceFirehose.off(`device:${this.state.deviceUUID}`, this.onDevice)
-    this.setState({ deviceUUID, name, path, x, y, width, height }, () => {
-      this.deviceFirehose.on(`device:${deviceUUID}`, this.onDevice)
-      this.deviceFirehose.refresh(deviceUUID, this.handleError)
-      this.verifyConfigureSent()
-    })
+    if(deviceUUID) {
+      this.deviceFirehose.off(`device:${this.state.deviceUUID}`, this.onDevice)
+      this.setState({ deviceUUID, name, path, x, y, width, height }, () => {
+        this.deviceFirehose.on(`device:${deviceUUID}`, this.onDevice)
+        this.deviceFirehose.refresh(deviceUUID, this.handleError)
+        this.verifyConfigureSent()
+      })
+    }
   }
 
   onDevice = (device) => {
