@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import Button from 'zooid-button'
 import Card from 'zooid-card'
 import Input from 'zooid-input'
+import Label from 'zooid-form-label'
+import DevicePicker from 'zooid-meshblu-device-picker'
 import ResizableAndMovable from 'react-resizable-and-movable'
 
 import DeviceState from '../DeviceState'
@@ -10,13 +12,13 @@ import styles from './styles.css'
 
 const propTypes = {
   device: PropTypes.object,
+  devices: PropTypes.array,
   deviceUUID: PropTypes.string.isRequired,
   error: PropTypes.object,
   missingSubscription: PropTypes.bool.isRequired,
   name: PropTypes.string,
   path: PropTypes.string.isRequired,
-  onDeviceUUID: PropTypes.func.isRequired,
-  onName: PropTypes.func.isRequired,
+  onDeviceChange: PropTypes.func.isRequired,
   onPath: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
   onSubscribe: PropTypes.func.isRequired,
@@ -26,11 +28,9 @@ const propTypes = {
 const defaultProps = {}
 
 const DeviceDebugPanel = (props) => {
-  const { device, deviceUUID, error, missingSubscription, name, path, x, y, width, height } = props
-  const { onDeviceUUID, onName, onPath, onRemove, onSubscribe, onDrag, onResize } = props
+  const { device, devices, deviceUUID, error, missingSubscription, name, path, x, y, width, height } = props
+  const { onDeviceChange, onPath, onRemove, onSubscribe, onDrag, onResize } = props
 
-  const onChangeName = (event) => onName(event.target.value)
-  const onChangeUUID = (event) => onDeviceUUID(event.target.value)
   const onChangePath = (event) => {
     onPath(event.target.value)
   }
@@ -40,6 +40,7 @@ const DeviceDebugPanel = (props) => {
   }
   const onDragEvent = (event, ui) => onDrag(ui.position.left, ui.position.top)
   const onResizeEvent = (direction, styleSize) => onResize(styleSize.width, styleSize.height)
+  const onDeviceSelection = (device) => onDeviceChange(device)
 
   return (
     <ResizableAndMovable x={x?x:0} y={y?y:0} width={width?width:'50%'} height={height?height:'100%'}
@@ -48,8 +49,10 @@ const DeviceDebugPanel = (props) => {
       <Card className={styles.card}>
         <a href onClick={onClickRemove} className={styles.remove}>&times;</a>
 
-        <Input placeholder="Name" onChange={onChangeName} value={name} />
-        <Input label="Device UUID" required onChange={onChangeUUID} value={deviceUUID} />
+        <Label>Device</Label>
+        <DevicePicker devices={devices} onSelection={onDeviceSelection} defaultDevice={device}/>
+
+        <br/>
         <Input label="Path" onChange={onChangePath} value={path} />
 
         <DeviceState

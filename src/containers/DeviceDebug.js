@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import DeviceDebugPanel from '../components/DeviceDebugPanel'
 import {clearPanelInfo, getPanelInfo, setPanelInfo} from '../services/panels-service'
 import {createSubscription, verifySubscription} from '../services/subscriptions-service'
+import {getDevices, getDevice} from '../services/devices-service'
 
 const propTypes = {
   panelID: PropTypes.string.isRequired,
@@ -25,7 +26,12 @@ export default class DeviceDebug extends Component {
   }
 
   componentWillMount() {
+    let self = this;
     this.loadFromLocalStorage()
+    getDevices(function(error, devices){
+      if(error) return console.log(error)
+      self.setState({devices})
+    })
   }
 
   componentWillUnmount() {
@@ -58,16 +64,13 @@ export default class DeviceDebug extends Component {
     this.setState({ device })
   }
 
-  onDeviceUUID = (deviceUUID) => {
+  onDeviceChange = (newDevice) => {
     const { panelID, device } = this.state
-    if (device && device.uuid != deviceUUID) this.setState({ device: null })
-    setPanelInfo(panelID, { deviceUUID })
-    this.loadFromLocalStorage()
-  }
-
-  onName = (name) => {
-    setPanelInfo(this.state.panelID, { name })
-    this.loadFromLocalStorage()
+    if( (!device && newDevice) || (device && newDevice && device.uuid != newDevice.uuid) ) {
+      this.setState({device: null})
+      setPanelInfo(panelID, { deviceUUID: newDevice.uuid })
+      this.loadFromLocalStorage()
+    }
   }
 
   onPath = (path) => {
@@ -111,11 +114,12 @@ export default class DeviceDebug extends Component {
   }
 
   render(){
-    const { device, deviceUUID, error, missingSubscription, name, path, x, y, width, height } = this.state
+    const { device, deviceUUID, error, missingSubscription, name, path, x, y, width, height, devices } = this.state
 
     return (
       <DeviceDebugPanel
         device={device}
+        devices={devices}
         deviceUUID={deviceUUID}
         error={error}
         missingSubscription={missingSubscription}
@@ -125,8 +129,7 @@ export default class DeviceDebug extends Component {
         y={y}
         width={width}
         height={height}
-        onDeviceUUID={this.onDeviceUUID}
-        onName={this.onName}
+        onDeviceChange={this.onDeviceChange}
         onPath={this.onPath}
         onRemove={this.onRemove}
         onSubscribe={this.onSubscribe}

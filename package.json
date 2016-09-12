@@ -48,7 +48,9 @@
     "uuid": "^2.0.2",
     "zooid-button": "^1.2.0",
     "zooid-card": "^1.1.0",
+    "zooid-form-label": "^1.0.1",
     "zooid-input": "^2.3.0",
+    "zooid-meshblu-device-picker": "^1.2.0",
     "zooid-page": "^2.0.0",
     "zooid-spinner": "^1.0.1",
     "zooid-ui": "^8.0.0"
