@@ -43,7 +43,12 @@ const DeviceDebugPanel = (props) => {
   const onDeviceSelection = (device) => onDeviceChange(device)
 
   return (
-    <ResizableAndMovable x={x?x:0} y={y?y:0} width={width?width:'50%'} height={height?height:'100%'}
+    <ResizableAndMovable
+      x={x?x:0}
+      y={y?y:0}
+      width={width?width:''}
+      height={height?height:''}
+      isResizable={{ top:false, right:true, bottom:false, left:true, topRight:false, bottomRight:false, bottomLeft:false, topLeft:false }}
       onResizeStop = {onResizeEvent}
       onDragStop = {onDragEvent}>
       <Card className={styles.card}>
