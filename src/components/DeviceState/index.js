@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import React, { PropTypes } from 'react'
+import JSONTree from 'react-json-tree'
 
 import MissingSubscription from '../MissingSubscription'
 import styles from './styles.css'
@@ -25,19 +26,28 @@ const DeviceState = ({ device, error, missingSubscription, path, onSubscribe }) 
   }
 
   const part = (_.isEmpty(path)) ? device : _.get(device, path)
-  var deviceStr = JSON.stringify(part, null, 2)
-  if (_.isEmpty(deviceStr)) {
-    deviceStr = "No Data Available"
-  }
 
   if (error) {
-    deviceStr = error.message
+    return(
+      <pre className={styles.wrapper}><code>{error.message}</code></pre>
+    )
   }
 
-
-  return (
-    <pre className={styles.wrapper}><code>{deviceStr}</code></pre>
-  )
+  if(part !== null || part !== undefined) {
+    if(typeof part === 'object') {
+      return (
+        <JSONTree data={part} hideRoot={true}/>
+      )
+    } else {
+      return (
+        <pre className={styles.wrapper}><code>{JSON.stringify(part)}</code></pre>
+      )
+    }
+  } else {
+    return(
+      <pre className={styles.wrapper}><code>"No Data Available"</code></pre>
+    )
+  }
 }
 
 DeviceState.propTypes    = propTypes
