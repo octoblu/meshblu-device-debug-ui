@@ -23,7 +23,7 @@ const propTypes = {
   onRemove: PropTypes.func.isRequired,
   onSubscribe: PropTypes.func.isRequired,
   onDrag: PropTypes.func.isRequired,
-  onResize: PropTypes.func.isRequired
+  onResize: PropTypes.func.isRequired,
 }
 const defaultProps = {}
 
@@ -44,20 +44,21 @@ const DeviceDebugPanel = (props) => {
 
   return (
     <ResizableAndMovable
-      x={x?x:0}
-      y={y?y:0}
-      width={width?width:''}
-      height={height?height:''}
-      isResizable={{ top:false, right:true, bottom:false, left:true, topRight:false, bottomRight:false, bottomLeft:false, topLeft:false }}
-      onResizeStop = {onResizeEvent}
-      onDragStop = {onDragEvent}>
+      x={x ? x : 0}
+      y={y ? y : 0}
+      width={width ? width : ''}
+      height={height ? height : ''}
+      isResizable={{ top: false, right: true, bottom: false, left: true, topRight: false, bottomRight: false, bottomLeft: false, topLeft: false }}
+      onResizeStop={onResizeEvent}
+      onDragStop={onDragEvent}
+    >
       <Card className={styles.card}>
         <a href onClick={onClickRemove} className={styles.remove}>&times;</a>
 
         <Label>Device</Label>
-        <DevicePicker devices={devices} onSelection={onDeviceSelection} defaultDevice={device}/>
+        <DevicePicker devices={devices} onSelection={onDeviceSelection} defaultDevice={device} />
 
-        <br/>
+        <br />
         <Input label="Path" onChange={onChangePath} value={path} />
 
         <DeviceState
@@ -65,7 +66,8 @@ const DeviceDebugPanel = (props) => {
           missingSubscription={missingSubscription}
           error={error}
           path={path}
-          onSubscribe={onSubscribe} />
+          onSubscribe={onSubscribe}
+        />
       </Card>
     </ResizableAndMovable>
   )

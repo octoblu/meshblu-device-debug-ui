@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
-import {Link} from 'react-router'
-import {AppBar, AppBarPrimary} from 'zooid-ui'
+import { Link } from 'react-router'
+import { AppBar, AppBarPrimary } from 'zooid-ui'
 import 'zooid-ui/dist/style.css'
 
 import styles from './styles.css'

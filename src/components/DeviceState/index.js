@@ -20,7 +20,8 @@ const DeviceState = ({ device, error, missingSubscription, path, onSubscribe }) 
       <div className={styles.wrapper}>
         <MissingSubscription
           onSubscribe={onSubscribe}
-          message="User is not subscribed to this device's configure.sent messages." />
+          message="User is not subscribed to this device's configure.sent messages."
+        />
       </div>
     )
   }
@@ -28,26 +29,18 @@ const DeviceState = ({ device, error, missingSubscription, path, onSubscribe }) 
   const part = (_.isEmpty(path)) ? device : _.get(device, path)
 
   if (error) {
-    return(
+    return (
       <pre className={styles.wrapper}><code>{error.message}</code></pre>
     )
   }
 
-  if(part !== null || part !== undefined) {
-    if(typeof part === 'object') {
-      return (
-        <JSONTree data={part} hideRoot={true}/>
-      )
-    } else {
-      return (
-        <pre className={styles.wrapper}><code>{JSON.stringify(part)}</code></pre>
-      )
-    }
-  } else {
-    return(
-      <pre className={styles.wrapper}><code>"No Data Available"</code></pre>
-    )
+  if (_.isPlainObject(part)) {
+    return <JSONTree data={part} hideRoot />
   }
+
+  const partStr = JSON.stringify((part || null), null, 2)
+
+  return <pre className={styles.wrapper}><code>{partStr}</code></pre>
 }
 
 DeviceState.propTypes    = propTypes

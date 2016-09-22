@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import Button from 'zooid-button'
-import Card from 'zooid-card'
 
 import styles from './styles.css'
 

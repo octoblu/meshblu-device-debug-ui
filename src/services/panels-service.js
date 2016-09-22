@@ -1,4 +1,12 @@
+import _ from 'lodash'
 import uuid from 'uuid'
+
+export function getPanels() {
+  const panelsStr = window.localStorage.getItem('panels')
+  if (!panelsStr) return []
+
+  return JSON.parse(panelsStr)
+}
 
 export function addPanel() {
   const panels = getPanels()
@@ -10,16 +18,9 @@ export function clearPanelInfo(panelID) {
   window.localStorage.removeItem(`panel:${panelID}`)
 }
 
-export function getPanels() {
-  const panelsStr = window.localStorage.getItem('panels')
-  if (!panelsStr) return []
-
-  return JSON.parse(panelsStr)
-}
-
 export function getPanelInfo(panelID) {
   const panelStr = window.localStorage.getItem(`panel:${panelID}`)
-  if (!panelStr) return {name: '', deviceUUID: '', path: ''}
+  if (!panelStr) return { name: '', deviceUUID: '', path: '' }
 
   return JSON.parse(panelStr)
 }

@@ -1,7 +1,7 @@
 import atob from 'atob'
 import cookie from 'react-cookie'
-import { MESHBLU_HOST } from '../config/constants'
 import MeshbluHttp from 'browser-meshblu-http'
+import { MESHBLU_HOST } from '../config/constants'
 
 export function getMeshbluConfig() {
   const bearerToken = cookie.load('meshbluBearerToken')

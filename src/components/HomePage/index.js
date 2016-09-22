@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { PropTypes } from 'react'
 import Button from 'zooid-button'
 import Card from 'zooid-card'
@@ -32,7 +33,8 @@ const HomePage = ({ error, missingSubscription, panels, deviceFirehose, onAdd, o
         <Card className={styles.card}>
           <MissingSubscription
             onSubscribe={onSubscribe}
-            message='User is not subscribed to its own configure.received messages.' />
+            message="User is not subscribed to its own configure.received messages."
+          />
         </Card>
       </Page>
     )
@@ -44,7 +46,8 @@ const HomePage = ({ error, missingSubscription, panels, deviceFirehose, onAdd, o
         key={panelID}
         panelID={panelID}
         deviceFirehose={deviceFirehose}
-        onRemove={onRemove} />
+        onRemove={onRemove}
+      />
     )
   })
 
