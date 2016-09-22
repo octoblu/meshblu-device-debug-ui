@@ -15,6 +15,7 @@ const propTypes = {
 const defaultProps = {}
 
 const DeviceState = ({ device, error, missingSubscription, path, onSubscribe }) => {
+  console.log({ device, error, missingSubscription, path, onSubscribe })
   if (missingSubscription) {
     return (
       <div className={styles.wrapper}>

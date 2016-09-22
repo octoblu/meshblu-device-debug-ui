@@ -29,7 +29,7 @@ export default class DeviceDebug extends Component {
     let self = this;
     this.loadFromLocalStorage()
     getDevices(function(error, devices){
-      if(error) return console.log(error)
+      if(error) return console.error(error)
       self.setState({devices})
     })
   }
@@ -68,11 +68,15 @@ export default class DeviceDebug extends Component {
 
   onDeviceChange = (newDevice) => {
     const { panelID, device } = this.state
-    if( (!device && newDevice) || (device && newDevice && device.uuid != newDevice.uuid) ) {
-      this.setState({device: null})
-      setPanelInfo(panelID, { deviceUUID: newDevice.uuid })
-      this.loadFromLocalStorage()
-    }
+
+    const deviceUUID = _.get(device, 'uuid')
+    const newDeviceUUID = _.get(newDevice, 'uuid')
+
+    if( deviceUUID === newDeviceUUID ) return
+
+    this.setState({device: null})
+    setPanelInfo(panelID, { deviceUUID: newDeviceUUID })
+    this.loadFromLocalStorage()
   }
 
   onPath = (path) => {
