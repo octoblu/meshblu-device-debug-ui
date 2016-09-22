@@ -15,7 +15,12 @@ const propTypes = {
 const defaultProps = {}
 
 const DeviceState = ({ device, error, missingSubscription, path, onSubscribe }) => {
-  console.log({ device, error, missingSubscription, path, onSubscribe })
+  if (error) {
+    return (
+      <pre className={styles.wrapper}><code>{error.message}</code></pre>
+    )
+  }
+
   if (missingSubscription) {
     return (
       <div className={styles.wrapper}>
@@ -28,12 +33,6 @@ const DeviceState = ({ device, error, missingSubscription, path, onSubscribe }) 
   }
 
   const part = (_.isEmpty(path)) ? device : _.get(device, path)
-
-  if (error) {
-    return (
-      <pre className={styles.wrapper}><code>{error.message}</code></pre>
-    )
-  }
 
   if (_.isPlainObject(part)) {
     return <JSONTree data={part} hideRoot />

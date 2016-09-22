@@ -36,8 +36,7 @@ export default class DeviceDebug extends Component {
 
   componentWillUnmount() {
     this.cancelled = true
-    const { panelID } = this.state
-    const { deviceUUID, name, path, x, y, width, height } = getPanelInfo(panelID)
+    getPanelInfo(this.state.panelID)
     this.deviceFirehose.off(`device:${this.state.deviceUUID}`, this.onDevice)
   }
 
@@ -62,7 +61,7 @@ export default class DeviceDebug extends Component {
 
   onDevice = (device) => {
     const { deviceUUID } = this.state
-    if (device.uuid != deviceUUID) return this.setState({ device: null })
+    if (device.uuid !== deviceUUID) return this.setState({ device: null })
     this.setState({ device })
   }
 
@@ -108,7 +107,7 @@ export default class DeviceDebug extends Component {
   }
 
   verifyConfigureSent() {
-    const {deviceUUID} = this.state
+    const { deviceUUID } = this.state
     if (_.isEmpty(deviceUUID)) return
 
     const subscription = {emitterUuid: deviceUUID, type: 'configure.sent'}

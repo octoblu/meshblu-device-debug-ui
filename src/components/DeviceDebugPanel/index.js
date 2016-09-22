@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import Button from 'zooid-button'
 import Card from 'zooid-card'
 import Input from 'zooid-input'
 import Label from 'zooid-form-label'
@@ -7,13 +6,12 @@ import DevicePicker from 'zooid-meshblu-device-picker'
 import ResizableAndMovable from 'react-resizable-and-movable'
 
 import DeviceState from '../DeviceState'
-import MissingSubscription from '../MissingSubscription'
 import styles from './styles.css'
 
 const propTypes = {
   device: PropTypes.object,
   devices: PropTypes.array,
-  deviceUUID: PropTypes.string.isRequired,
+  deviceUUID: PropTypes.string,
   error: PropTypes.object,
   missingSubscription: PropTypes.bool.isRequired,
   name: PropTypes.string,
@@ -34,10 +32,12 @@ const DeviceDebugPanel = (props) => {
   const onChangePath = (event) => {
     onPath(event.target.value)
   }
+
   const onClickRemove = (event) => {
     event.preventDefault()
     onRemove()
   }
+
   const onDragEvent = (event, ui) => onDrag(ui.position.left, ui.position.top)
   const onResizeEvent = (direction, styleSize) => onResize(styleSize.width, styleSize.height)
   const onDeviceSelection = (device) => onDeviceChange(device)
