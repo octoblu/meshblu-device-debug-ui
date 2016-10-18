@@ -18,7 +18,7 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
     alias: {
-      config: path.join(__dirname, 'src', 'config', 'development')
+      config: path.join(__dirname, 'src', 'config', 'production')
     }
   },
   plugins: [
