@@ -4,7 +4,7 @@ import Firehose from 'meshblu-firehose-socket.io/src/firehose-socket-io.coffee'
 import moment from 'moment'
 import EventEmitter2 from 'eventemitter2'
 
-import {FIREHOSE_CONFIG} from '../config/constants'
+import {FIREHOSE_CONFIG} from 'config'
 import uuid from 'uuid'
 
 export default class DeviceFirehose extends EventEmitter2 {

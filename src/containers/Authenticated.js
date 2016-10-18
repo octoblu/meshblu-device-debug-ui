@@ -2,7 +2,7 @@ import url from 'url'
 import React, { Component } from 'react'
 import Spinner from 'zooid-spinner'
 
-import { OAUTH_CLIENT_ID, OAUTH_PROVIDER_URI } from '../config/constants.js'
+import { OAUTH_CLIENT_ID, OAUTH_PROVIDER_URI } from 'config'
 import { fetchOctobluUser } from '../services/auth-service'
 
 export default class Authenticated extends Component {
