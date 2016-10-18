@@ -1,6 +1,6 @@
 {
   "name": "meshblu-device-debug-ui",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "meshblu-device-debug-ui",
   "main": "index.js",
   "scripts": {
