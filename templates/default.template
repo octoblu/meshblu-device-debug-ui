@@ -1,6 +1,6 @@
 server {
   listen       80;
-  server_name  localhost;
+  server_name _;
 
   underscores_in_headers on;
 
@@ -21,6 +21,10 @@ server {
   location / {
     expires -1;
     access_log off;
+
+    if ($http_x_forwarded_proto = 'http') {
+      return 301 https://$host$request_uri;
+    }
 
     root /usr/share/nginx/html;
 
