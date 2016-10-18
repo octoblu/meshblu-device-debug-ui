@@ -1,6 +1,6 @@
 {
   "name": "meshblu-device-debug-ui",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "meshblu-device-debug-ui",
   "main": "index.js",
   "scripts": {
@@ -48,6 +48,7 @@
     "react-json-tree": "^0.10.0",
     "react-resizable-and-movable": "^3.0.0",
     "react-router": "^2.6.0",
+    "strict-uri-encode": "^2.0.0",
     "uuid": "^2.0.2",
     "zooid-button": "^1.2.0",
     "zooid-card": "^1.1.0",
