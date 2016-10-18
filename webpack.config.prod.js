@@ -11,6 +11,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
+    // We inferred the "public path" (such as / or /my-project) from homepage.
+    publicPath: process.env.CDN + '/v' + PKG_VERSION
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json'],
