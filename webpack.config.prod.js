@@ -2,6 +2,7 @@ var path         = require('path');
 var webpack      = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var autoprefixer = require('autoprefixer');
+var PKG_VERSION = require('./package.json').version;
 
 module.exports = {
   devtool: 'cheap-module-source-map',
