@@ -1,6 +1,6 @@
 {
   "name": "meshblu-device-debug-ui",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "meshblu-device-debug-ui",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,8 @@
     "lint:fix": "eslint src --fix",
     "test": "nyc --require babel-core/register --require babel-polyfill mocha",
     "test:watch": "mocha -w -R mocha-multi --reporter-options spec=-,mocha-osx-reporter=-",
-    "coverage": "nyc report --reporter=lcov"
+    "coverage": "nyc report --reporter=lcov",
+    "mocha:json": "env NPM_ENV=test mocha --reporter json > coverage/mocha.json"
   },
   "keywords": [
     "zooid",
