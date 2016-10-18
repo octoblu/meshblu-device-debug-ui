@@ -3,27 +3,17 @@ node_js:
 - '5'
 branches:
   only:
-  - /^v[0-9]/
-before_deploy:
+  - "/^v[0-9]/"
+env:
+  global: CDN=https://meshblu-device-debug-static.octoblu.com
+after_success:
 - npm run build
+- export PKG_VERSION="$(node -e 'console.log(require("./package.json").version)')"
+- if [ -z "$PKG_VERSION" ]; then echo 'Missing PKG_VERSION env' && exit 1; fi
+- mkdir -p dpl_assets/v$PKG_VERSION
+- cp -r dist/* dpl_assets/v$PKG_VERSION
 script:
 - exit 0
-addons:
-  code_climate:
-    repo_token: 
-before_script:
-- npm install -g codeclimate-test-reporter
-after_script:
-- npm run coverage
-- codeclimate-test-reporter < coverage/lcov.info
-notifications:
-  webhooks:
-  - https://beekeeper.octoblu.com/webhooks/travis:ci
-after_success:
-- npm run coverage
-- npm run mocha:json
-- bash <(curl -s https://codecov.io/bash)
-- bash <(curl -s https://codecov.octoblu.com/bash)
 deploy:
   provider: s3
   access_key_id: AKIAJU3UCEPAB64BWU7A
@@ -35,3 +25,6 @@ deploy:
   region: us-west-2
   on:
     tags: true
+notifications:
+  webhooks:
+  - https://beekeeper.octoblu.com/webhooks/travis:ci
