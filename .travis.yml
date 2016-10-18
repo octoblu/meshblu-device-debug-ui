@@ -13,7 +13,7 @@ after_success:
 - mkdir -p dpl_assets/v$PKG_VERSION
 - cp -r dist/* dpl_assets/v$PKG_VERSION
 script:
-- exit 0
+- echo "No Tests"
 deploy:
   provider: s3
   access_key_id: AKIAJU3UCEPAB64BWU7A
