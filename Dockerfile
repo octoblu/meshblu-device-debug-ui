@@ -1,7 +1,7 @@
 FROM nginx
 MAINTAINER Octoblu <docker@octoblu.com>
 
-COPY package.json .
+COPY . .
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
       ca-certificates \
@@ -15,9 +15,6 @@ RUN cat package.json \
       | awk -F: '{ print $2 }' \
       | sed 's/[",]//g' \
       | tr -d '[[:space:]]' > .PKG_VERSION
-
-COPY scripts/ scripts/
-COPY templates/ templates/
 
 RUN sed -e \
   "s/PKG_VERSION/$(cat .PKG_VERSION)/" \
