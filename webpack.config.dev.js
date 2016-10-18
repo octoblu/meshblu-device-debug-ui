@@ -1,5 +1,6 @@
 var autoprefixer = require('autoprefixer');
 var path         = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack      = require('webpack');
 
 module.exports = {
@@ -22,7 +23,24 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    // Generates an `index.html` file with the <script> injected.
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: path.join(__dirname, 'index.html'),
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true
+      }
+    })
   ],
   module: {
     loaders: [

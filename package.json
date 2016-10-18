@@ -1,6 +1,6 @@
 {
   "name": "meshblu-device-debug-ui",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "meshblu-device-debug-ui",
   "main": "index.js",
   "scripts": {
@@ -83,6 +83,7 @@
     "eslint-plugin-react": "^6.1.1",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.14.0",
+    "html-webpack-plugin": "^2.22.0",
     "jsdom": "^9.4.2",
     "mocha": "^3.0.2",
     "mocha-multi": "^0.9.0",
