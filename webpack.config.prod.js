@@ -28,6 +28,13 @@ module.exports = {
   module: {
     loaders: [
       {
+        test: /\.coffee$/,
+        loader: "coffee-loader",
+        include: [
+          path.join(__dirname, 'node_modules')
+        ]
+      },
+      {
         test: /\.js$/,
         loaders: ['babel'],
         include: path.join(__dirname, 'src')
