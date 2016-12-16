@@ -1,6 +1,6 @@
 {
   "name": "meshblu-device-debug-ui",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "meshblu-device-debug-ui",
   "main": "index.js",
   "scripts": {
@@ -50,14 +50,14 @@
     "react-router": "^2.6.0",
     "strict-uri-encode": "^2.0.0",
     "uuid": "^2.0.2",
-    "zooid-button": "^1.2.0",
+    "zooid-button": "^1.2.3",
     "zooid-card": "^1.1.0",
     "zooid-form-label": "^1.0.1",
-    "zooid-input": "^2.3.0",
+    "zooid-input": "^2.3.2",
     "zooid-meshblu-device-picker": "^1.2.0",
     "zooid-page": "^2.0.0",
-    "zooid-spinner": "^1.0.1",
-    "zooid-ui": "^8.0.0"
+    "zooid-spinner": "^1.0.2",
+    "zooid-ui": "^8.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.7",
