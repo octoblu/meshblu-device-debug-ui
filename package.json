@@ -1,6 +1,6 @@
 {
   "name": "meshblu-device-debug-ui",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "meshblu-device-debug-ui",
   "main": "index.js",
   "scripts": {
@@ -100,5 +100,16 @@
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2"
+  },
+  "nyc": {
+    "cache": true,
+    "reporter": [
+      "text-summary",
+      "lcov",
+      "json"
+    ],
+    "extension": [
+      ".coffee"
+    ]
   }
 }
