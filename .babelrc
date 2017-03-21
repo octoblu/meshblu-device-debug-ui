@@ -3,6 +3,14 @@
   "env": {
     "development": {
       "presets": ["react-hmre"]
+    },
+    "test": {
+      "plugins": [
+        [
+          "babel-plugin-webpack-alias",
+          { "config": "webpack.config.test.js" }
+        ]
+      ]
     }
   }
 }
