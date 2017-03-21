@@ -1,4 +1,3 @@
-var autoprefixer = require('autoprefixer');
 var path         = require('path');
 var webpack      = require('webpack');
 
@@ -18,23 +17,23 @@ module.exports = {
   plugins: [
     new webpack.IgnorePlugin(/^(buffertools)$/), // unwanted "deeper" dependency
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx', '.json'],
     alias: {
       config: path.join(__dirname, 'src', 'config', 'development')
     }
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
-      loaders: ['babel'],
+      loaders: ['babel-loader'],
       include: path.join(__dirname, 'src')
     },
     {
       test:   /\.css$/,
-      loader: "style-loader!css-loader!postcss-loader"
+      loader: "style-loader!css-loader"
     },
     {
       test:   /\.json$/,
@@ -42,7 +41,4 @@ module.exports = {
     }
   ]
   },
-  postcss: function () {
-    return [ autoprefixer ];
-  }
 };
